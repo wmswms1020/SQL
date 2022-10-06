@@ -1,0 +1,156 @@
+select *
+from employees;
+
+select *
+from departments;
+
+select salary*12
+from employees;
+
+select *
+from employees;
+
+select  first_name,
+        phone_number,
+        hire_date
+from employees;
+
+select first_name||' '||last_name
+from employees;
+
+select  first_name,
+        last_name
+from employees;
+
+select  first_name||'-'||last_name,
+        salary
+from employees;
+
+select  first_name,
+        salary
+from employees
+where salary >= 14000 
+and salary <= 17000;
+
+select  first_name,
+        salary
+from employees
+where salary
+between 14000 and 17000;
+
+--//연봉이 2100 3100 4100 5100 인 사원의 이름과 연봉을 구하시오
+select  first_name,
+        salary
+from employees
+where salary in ('2100','3100','4100','5100');
+
+select  first_name,
+        last_name,
+        salary
+from employees
+where first_name like 'L%';
+
+--이름에 am을 포함한 사원의 이름과 연봉을 출력하세요
+select  first_name,
+        last_name,
+        salary
+from employees
+where first_name like 'am%';
+
+--이름의 두번째 글자가 a 인 사원의 이름과 연봉을 출력하세요
+select  first_name,
+        last_name,
+        salary
+from employees
+where first_name like '_a%';
+
+--이름의 네번째 글자가 a인 사원의 이름을 출력하세요
+select  first_name,
+        last_name,
+        salary
+from employees
+where first_name like '___a';
+--이름이 4글자인 사원중 끝에서 두번째 글자가 a인 사원의 이름을 출력하세요
+select first_name
+from employees
+where first_name like '__a_';
+
+select  first_name,
+        salary,
+        commission_pct,
+        salary*commission_pct
+from employees
+where salary BETWEEN 13000 and 15000;
+
+select  first_name,
+        salary
+from employees
+order by salary desc;
+
+--부서번호를 오름차순으로 정렬하고 부서번호, 급여, 이름을 출력하세요
+select  department_id,
+        salary,
+        first_name
+from employees
+order by department_id desc;
+
+--급여가 10000 이상인 직원의 이름 급여를 급여가 큰직원부터 출력하세요
+select  first_name,
+        salary
+from employees
+where salary >= 10000
+order by salary desc;
+--부서번호를 오름차순으로 정렬하고 부서번호가 같으면 급여가 높은 사람부터 부서번호 급여 이름을 출력하세요
+select  department_id,
+        salary,
+        first_name
+from employees
+order by department_id, salary desc;
+
+--영어의 첫글자만 대문자로 출력하고 나머지는 전부 소문자로 출력하는 함수
+
+select  email,
+        initcap(email),
+        department_id
+from employees
+where department_id = 100;
+
+--함수에 입력되는 데이터의 총 건수를 구하는 함수
+select COUNT(*), COUNT(commission_pct) --(*)null포함  (commission_pct)null제외
+from employees;
+
+select count(*)
+from employees
+where salary > 16000;
+
+--sum 입력된 데이터들의 합계 값 구하는 함수
+select  count(*),
+        sum(salary)
+from employees;
+
+--avg 입력된 값들의 평균값을 구하는 함수
+--!!!주의!!!  null값이 있는 경우 빼고 계산함 - nvl 함수와 같이 사용
+
+select  count(*),
+        SUM(salary),
+        AVG(salary)
+from employees;
+
+--max min 최대값 최소값 구하는 함수
+-- 여러건의 데이터를 순서대로 정렬 후 값을 구하기 때문에 데이터가 많을 때는 느리다(주의해서 사용)
+
+select  count(*),
+        MAX(salary),
+        MIN(salary)
+from employees;
+
+--GROUP BY 절 Group by에 참여한 컬럼이나 그룹함수만 올수있다 (예 job_id == job_id)
+
+--연봉(salary)의 합계가 20000이상인 부서의 부서 번호와 인원수 급여합계를 출력하세요
+
+select  department_id,
+        count(*),
+        sum(salary)
+from employees
+group by department_id
+having sum(salary) >= 20000;
